@@ -1,26 +1,37 @@
-import { Box } from "./Box"
+import React from "react";
+import Box from "./Box";
 
-function Board(props){
+class Board extends React.Component{
     
-    const createBox = values =>{
-        values.map(value  => {
-            <Box value={value}/>
-        })
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            class: this.props.class
+        }
+    }
 
-    return(
-        <div>
-            <div className="row">
-                {createBox[0,1,2]}    
-            </div>
-            <div className="row">
+    generateSquares = ()=> {       
+        const squares = Array(9).fill(null);
+        for (let i = 0; i<squares.length; i++) {
+            squares[i] = <Box 
+                id = {i} 
+                class = {this.state.class}
+                onClick={this.props.onClick}
+                turn={this.props.turn}
+                clean = {this.props.clean}
+            />
+        }
+        return squares;
+    }
 
-            </div>
-            <div className="row">
+    render(){
 
+        return(
+            <div className="container">
+                {this.generateSquares()}
             </div>
-        </div>
-    )
+        )
+    }
 }   
 
 export default Board;
